@@ -336,6 +336,8 @@ type Client struct {
 	Validate              *ValidateService
 	Version               *VersionService
 	Wikis                 *WikisService
+
+	Approvals *ApprovalsService
 }
 
 // ListOptions specifies the optional parameters to various List methods that
@@ -477,6 +479,8 @@ func newClient(httpClient *http.Client) *Client {
 	c.Version = &VersionService{client: c}
 	c.Wikis = &WikisService{client: c}
 
+	c.Approvals = &ApprovalsService{client: c}
+
 	return c
 }
 
@@ -558,6 +562,7 @@ func (c *Client) NewRequest(method, path string, opt interface{}, options []Opti
 		if err != nil {
 			return nil, err
 		}
+		//fmt.Printf("FFF %s\n", bodyBytes)
 		bodyReader := bytes.NewReader(bodyBytes)
 
 		u.RawQuery = ""
